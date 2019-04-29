@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class AudioDetection : MonoBehaviour
 {
     public float sensitivity = 100;
     public float loudness = 0;
     private AudioSource _audio;
+    private List<double> timestamps; // timestamps of claps, starting at 0 for first clap
+    private double startTime; // time of first detected clap
     void Awake()
     {
         _audio = GetComponent<AudioSource>();
@@ -15,8 +20,12 @@ public class AudioDetection : MonoBehaviour
         _audio.clip = Microphone.Start(null, true, 10, 44100);
         _audio.loop = true;
         _audio.mute = false;
-        while (!(Microphone.GetPosition(null) > 0)) { }
-        _audio.Play();
+        startTime = -1;
+        timestamps = new List<double>();
+        while (!(Microphone.GetPosition(null) > 0)) {
+             _audio.Play();
+         }
+       
     }
     void Update()
     {
@@ -25,6 +34,14 @@ public class AudioDetection : MonoBehaviour
         {
             Debug.Log("SOUND DETECTED");
             Debug.Log(loudness);
+            if(startTime < 0) {
+                startTime = GetCurrentTime();
+                timestamps.Add(0);
+            } else {
+                timestamps.Add(GetCurrentTime() - startTime);
+            }
+            Debug.Log("TIME: " + timestamps[timestamps.Count - 1]);
+            
         }
     }
     float GetAveragedVolume()
@@ -37,5 +54,9 @@ public class AudioDetection : MonoBehaviour
             a += Mathf.Abs(s);
         }
         return a / 256;
+    }
+
+    double GetCurrentTime() {
+        return (DateTime.Now.ToUniversalTime() - new DateTime (1970, 1, 1)).TotalSeconds;
     }
 }
