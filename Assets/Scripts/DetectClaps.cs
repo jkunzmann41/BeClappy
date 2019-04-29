@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using System.Collections;
+using System.Runtime.InteropServices;
+
 
 [RequireComponent (typeof (AudioSource))]  
-
+[RequireComponent(typeof(AudioListener))]
 public class DetectClaps : MonoBehaviour
 {
+    //  [DllImport("AudioPluginDemo")]
+    // private static extern float PitchDetectorGetFreq(int index);
+
     //A boolean that flags whether there's a connected microphone  
     private bool micConnected = false;  
   
@@ -15,6 +22,8 @@ public class DetectClaps : MonoBehaviour
   
     //A handle to the attached AudioSource  
     private AudioSource goAudioSource;  
+
+    public string frequency;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +51,14 @@ public class DetectClaps : MonoBehaviour
   
             //Get the attached AudioSource component  
             goAudioSource = this.GetComponent<AudioSource>();  
+            float[] curOutput = new float[1024];
+	        goAudioSource.GetOutputData(curOutput, 0);
+            Debug.Log(curOutput);
+            Debug.Log("curOutput:");
+            foreach (float i in curOutput)
+            {
+                Debug.Log(i);
+            }
         }  
     }
 
@@ -84,6 +101,35 @@ public class DetectClaps : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+         float[] spectrum = new float[256];
+
+        AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+        Debug.Log("SPECTRUM RESULTS");
+        foreach (float i in spectrum)
+        {
+            Debug.Log(i);
+        }
+
+        for (int i = 1; i < spectrum.Length - 1; i++)
+        {
+            Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
+            Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
+            Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
+            Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
+        }
+        // float freq = PitchDetectorGetFreq(0), deviation = 0.0f;
+        // frequency = freq.ToString() + " Hz";
+
+        // if (freq > 0.0f)
+        // {
+        //     Debug.Log("sound detected at " + System.DateTime.Now);
+
+        //     // float noteval = 57.0f + 12.0f * Mathf.Log10(freq / 440.0f) / Mathf.Log10(2.0f);
+        //     // float f = Mathf.Floor(noteval + 0.5f);
+        //     // deviation = Mathf.Floor((noteval - f) * 100.0f);
+        //     // int noteIndex = (int)f % 12;
+        //     // int octave = (int)Mathf.Floor((noteval + 0.5f) / 12.0f);
+        //     // note = noteNames[noteIndex] + " " + octave;
+        // }
     }
 }
