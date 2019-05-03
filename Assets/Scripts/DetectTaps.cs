@@ -9,22 +9,34 @@ public class DetectTaps : MonoBehaviour
 {
     // These are global and should be extracted out and referenced by other scripts
     public double bpm;
-    public enum Rating {AWESOME, GREAT, GOOD, MISSED};
+    public enum Rating {AWESOME, GREAT, GOOD, MISSED, EARLY, LATE};
     // value is the max offset from the actual time the tap was supposed to happen
     public Dictionary<Rating, double> ratingMap = new Dictionary<Rating, double> {
         {Rating.AWESOME, .1},
         {Rating.GREAT, .15},
         {Rating.GOOD, .2},
-        {Rating.MISSED, 1}
+        {Rating.MISSED, 1},
+        {Rating.LATE, 1},
+        {Rating.EARLY, 1}
     };
 
     public Dictionary<Rating, String> rateDisplayMap = new Dictionary<Rating, String> {
         {Rating.AWESOME, "---Awesome---"},
         {Rating.GREAT, "---Great---"},
         {Rating.GOOD, "---Good---"},
-        {Rating.MISSED, "---Missed---"}
+        {Rating.MISSED, "---Missed---"},
+        {Rating.LATE, "---Late---"},
+        {Rating.EARLY, "---Early---"}
     };
 
+    public Dictionary<Rating, int> rateStarsMap = new Dictionary<Rating, int> {
+        {Rating.AWESOME, 3},
+        {Rating.GREAT, 2},
+        {Rating.GOOD, 1},
+        {Rating.MISSED, 0},
+        {Rating.LATE, 0},
+        {Rating.EARLY, 0}
+    };
 
     public enum Note {WHOLE, HALF, QUARTER, EIGHTH, SIXTEENTH};
     // value is duration of the note (number of beats)
@@ -35,6 +47,8 @@ public class DetectTaps : MonoBehaviour
         {Note.EIGHTH, .5},
         {Note.SIXTEENTH, .25}
     };
+
+
     // end of globals
 
     private List<Note> rhythm = new List<Note> {Note.HALF, Note.QUARTER, Note.QUARTER};
@@ -47,6 +61,8 @@ public class DetectTaps : MonoBehaviour
     private int noteIndex; // next note to be played
     private double noteStartTime; // time that most recent tap occurred
     private double expectedClapTime; // time to expect the next clap
+    private bool inprogress;
+    private double window;
 
     void Awake()
     {
@@ -61,9 +77,15 @@ public class DetectTaps : MonoBehaviour
         expectedClapTime = 0;
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
+        inprogress = true;
+        window = 1; // stop accepting taps 1 second after last tap was supposed to occur
     }
     void Update()
-    {      
+    {   
+        if(rhythmStartTime > 0 && (GetCurrentTime() - rhythmStartTime > expNoteTimes[expNoteTimes.Count - 1] + window))
+            inprogress = false; 
+        if(!inprogress)
+            return;  
         if (Input.GetMouseButtonDown(0))
         {
             Rating rate = Rating.MISSED;
@@ -116,7 +138,10 @@ public class DetectTaps : MonoBehaviour
             return Rating.GREAT;
         if(absDiff <= ratingMap[Rating.GOOD])
             return Rating.GOOD;
-        return Rating.MISSED;
+        if(actual < expected)
+            return Rating.EARLY;
+        else
+            return Rating.LATE;
     }
 
     List<double> computeExpectedNoteTimes(List<Note> rhythm) {
@@ -147,5 +172,19 @@ public class DetectTaps : MonoBehaviour
     // This should render the corresponding image to the GUI
     void DisplayRating(Rating r) {
         Debug.Log(rateDisplayMap[r]);
+    }
+
+    // Computing number of stars to display after a rhythm in challenge mode
+    int computeNumStars(List<Rating> noteRatings) {
+        double starsAvg = computeAverageRating(noteRatings);
+        return (int)Math.Round(starsAvg);
+    }
+
+    double computeAverageRating(List<Rating> noteRatings) {
+        int sum = 0;
+        foreach (Rating r in noteRatings) {
+            sum += rateStarsMap[r];
+        }
+        return sum/noteRatings.Count;
     }
 }
