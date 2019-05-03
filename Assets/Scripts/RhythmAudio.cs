@@ -6,19 +6,9 @@ using System;
 
 public class RhythmAudio : MonoBehaviour
 {
-    // public enum Note {WHOLE, HALF, QUARTER, EIGHTH, SIXTEENTH};
-    // // value is duration of the note (number of beats)
-    // public Dictionary<Note, double> noteMap = new Dictionary<Note, double> {
-    //     {Note.WHOLE, 4}, 
-    //     {Note.HALF, 2},
-    //     {Note.QUARTER, 1},
-    //     {Note.EIGHTH, .5},
-    //     {Note.SIXTEENTH, .25}
-    // };
-
     private RhythmGenerate rg;
     private List<Note> rhythm = new List<Note> {Note.QUARTER, Note.EIGHTH, Note.EIGHTH};
-    //private List<float> noteDurations = new List<float> { .8f, .4f, .4f, .8f, .4f, .4f};
+   
     private List<float> noteDurations;
     private AudioSource _audio;
     private double rhythmLengthTime = 5; // change this later
