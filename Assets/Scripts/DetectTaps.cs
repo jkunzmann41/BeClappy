@@ -8,7 +8,6 @@ using System.Linq;
 public class DetectTaps : MonoBehaviour
 {
     // These are global and should be extracted out and referenced by other scripts
-    public double bpm;
     public enum Rating {AWESOME, GREAT, GOOD, MISSED, EARLY, LATE};
     // value is the max offset from the actual time the tap was supposed to happen
     public Dictionary<Rating, double> ratingMap = new Dictionary<Rating, double> {
@@ -38,19 +37,8 @@ public class DetectTaps : MonoBehaviour
         {Rating.EARLY, 0}
     };
 
-    public enum Note {WHOLE, HALF, QUARTER, EIGHTH, SIXTEENTH};
-    // value is duration of the note (number of beats)
-    public Dictionary<Note, double> noteMap = new Dictionary<Note, double> {
-        {Note.WHOLE, 4}, 
-        {Note.HALF, 2},
-        {Note.QUARTER, 1},
-        {Note.EIGHTH, .5},
-        {Note.SIXTEENTH, .25}
-    };
-
-
     // end of globals
-
+    public RhythmGenerate rg;
     private List<Note> rhythm = new List<Note> {Note.HALF, Note.QUARTER, Note.QUARTER};
     private List<double> expNoteTimes;
     private List<Rating> noteRatings;
@@ -70,11 +58,11 @@ public class DetectTaps : MonoBehaviour
     }
     void Start()
     {
+        rg = new RhythmGenerate();
+        noteIndex = 0;
         noteRatings = Enumerable.Repeat(Rating.MISSED, rhythm.Count).ToList();
-        bpm = 60.0F;
-        expNoteTimes = computeExpectedNoteTimes(rhythm);
+        expNoteTimes = rg.computeExpectedNoteTimes(rhythm);
         rhythmStartTime = -1;
-        expectedClapTime = 0;
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
         inprogress = true;
@@ -144,21 +132,13 @@ public class DetectTaps : MonoBehaviour
             return Rating.LATE;
     }
 
-    List<double> computeExpectedNoteTimes(List<Note> rhythm) {
-        double offset = 0;
-        List<double> noteTimes = new List<double>();
-        foreach (Note note in rhythm) {
-            noteTimes.Add(offset);
-            offset += noteMap[note]/(bpm/60); // add note's beat duration divided by beats per second to get time offset
-        }
-        return noteTimes;
-    }
 
-    // Binary search for the nearest unrated note based on time of clap/tap. If both surrounding notes already rated, returns -1
+    // Returns index of nearest unattempted note by comparing time of clap/tap to the expected clap/tap times. If both surrounding notes already attempted, returns -1
     int NearestNote(double time) {
         int nearestLarger = ~expNoteTimes.BinarySearch(time);
         int nearestSmaller = nearestLarger - 1;
         if(nearestLarger == expNoteTimes.Count) {
+            // then nearestSmaller is index of last element in expNoteTimes
             if(noteRatings[nearestSmaller] == Rating.MISSED)
                 return nearestSmaller;
             return -1;

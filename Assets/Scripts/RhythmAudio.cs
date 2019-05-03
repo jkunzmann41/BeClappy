@@ -6,7 +6,20 @@ using System;
 
 public class RhythmAudio : MonoBehaviour
 {
-    private List<float> noteDurations = new List<float> { 1f, .5f, .5f, 1f, .5f, .5f};
+    // public enum Note {WHOLE, HALF, QUARTER, EIGHTH, SIXTEENTH};
+    // // value is duration of the note (number of beats)
+    // public Dictionary<Note, double> noteMap = new Dictionary<Note, double> {
+    //     {Note.WHOLE, 4}, 
+    //     {Note.HALF, 2},
+    //     {Note.QUARTER, 1},
+    //     {Note.EIGHTH, .5},
+    //     {Note.SIXTEENTH, .25}
+    // };
+
+    private RhythmGenerate rg;
+    private List<Note> rhythm = new List<Note> {Note.QUARTER, Note.EIGHTH, Note.EIGHTH};
+    //private List<float> noteDurations = new List<float> { .8f, .4f, .4f, .8f, .4f, .4f};
+    private List<float> noteDurations;
     private AudioSource _audio;
     private double rhythmLengthTime = 5; // change this later
     public int numTaps = 0;
@@ -15,6 +28,7 @@ public class RhythmAudio : MonoBehaviour
     private bool keepPlaying;
     private int clapIndex;
     private int totalClaps;
+    private bool first;
 
     void Awake()
     {
@@ -22,7 +36,10 @@ public class RhythmAudio : MonoBehaviour
     }
     void Start()
     {
-        keepPlaying = true;
+        rg = new RhythmGenerate();
+        List<Note> rep = rg.getRepeatedRhythm(rhythm, 4);
+        noteDurations = rg.computeNoteDurations(rep);
+        first = true;
         clapIndex = 0;
         startTime = -1;
         totalClaps = noteDurations.Count;
@@ -34,11 +51,14 @@ public class RhythmAudio : MonoBehaviour
     IEnumerator SoundOut()
      {
          while (clapIndex < totalClaps){
+             if(first) {
+                  yield return new WaitForSeconds(.5f);
+                  first = false;
+             }
             Debug.Log("clap at " + clapIndex);
             Debug.Log(GetCurrentTime());
             _audio.Play();
             yield return new WaitForSeconds(noteDurations[clapIndex++]); 
-
          }
      }
     double GetCurrentTime() {
