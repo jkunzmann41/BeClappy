@@ -21,6 +21,11 @@ public class RhythmGenerate {
 
     }
 
+    /**
+    Repeats the rhythm number of times specified by repititions
+    baseRhythm is the rhythm with a duration of 1 measure in 4/4 time signature
+    Returns the repeated rhythm as a List of Notes
+     */
     public List<Note> getRepeatedRhythm(List<Note> baseRhythm, int repititions) {
         List<Note> repeated = new List<Note>();
         for (int i= 0; i < repititions; i++) {
@@ -29,6 +34,10 @@ public class RhythmGenerate {
         return repeated;
     }
 
+    /*
+    Computes the times the notes should fall on (starting at 0) based on the bpm
+    Returns a List of doubles representing the times
+     */
     public List<double> computeExpectedNoteTimes(List<Note> rhythm) {
         double offset = 0;
         List<double> noteTimes = new List<double>();
@@ -40,6 +49,9 @@ public class RhythmGenerate {
         return noteTimes;
     }
 
+    /*
+    Computes and returns a List of floats representing the duration of each of the Notes from rhythm
+     */
     public List<float> computeNoteDurations(List<Note> rhythm) {
         List<float> noteDurs= new List<float>();
         foreach (Note note in rhythm) {

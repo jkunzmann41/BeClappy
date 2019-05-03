@@ -24,7 +24,6 @@ public class RhythmAudio : MonoBehaviour
     private double rhythmLengthTime = 5; // change this later
     public int numTaps = 0;
     private List<double> timestamps; // timestamps of taps, starting at 0 for tap
-    private double startTime; // time of first detected tap
     private bool keepPlaying;
     private int clapIndex;
     private int totalClaps;
@@ -41,7 +40,6 @@ public class RhythmAudio : MonoBehaviour
         noteDurations = rg.computeNoteDurations(rep);
         first = true;
         clapIndex = 0;
-        startTime = -1;
         totalClaps = noteDurations.Count;
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
