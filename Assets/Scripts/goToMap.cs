@@ -7,9 +7,6 @@ public class goToMap : MonoBehaviour
 {
     public void changeSceneToMap()
     {
-<<<<<<< HEAD
-        SceneManager.LoadScene("Map", LoadSceneMode.Single);
-=======
         Scene scene;
         scene = SceneManager.GetActiveScene();
         if (scene.buildIndex == 1)
@@ -20,6 +17,5 @@ public class goToMap : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
->>>>>>> UI_experiments
     }
 }
