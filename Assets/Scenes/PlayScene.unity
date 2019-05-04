@@ -1303,6 +1303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numTaps: 0
+  playButton: {fileID: 1359372011}
 --- !u!82 &1171139977
 AudioSource:
   m_ObjectHideFlags: 0

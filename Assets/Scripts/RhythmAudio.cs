@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using System;
 
 public class RhythmAudio : MonoBehaviour
@@ -18,6 +19,7 @@ public class RhythmAudio : MonoBehaviour
     private int clapIndex;
     private int totalClaps;
     private bool first;
+    public Button playButton;
 
     void Awake()
     {
@@ -38,6 +40,7 @@ public class RhythmAudio : MonoBehaviour
     
     IEnumerator SoundOut()
      {
+         playButton.gameObject.SetActive(false);
          while (clapIndex < totalClaps){
              if(first) {
                   yield return new WaitForSeconds(.5f);
@@ -48,6 +51,7 @@ public class RhythmAudio : MonoBehaviour
             _audio.Play();
             yield return new WaitForSeconds(noteDurations[clapIndex++]); 
          }
+         playButton.gameObject.SetActive(true);
      }
     double GetCurrentTime() {
         return (DateTime.Now.ToUniversalTime() - new DateTime (1970, 1, 1)).TotalSeconds;
