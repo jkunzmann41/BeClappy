@@ -177,27 +177,18 @@ public class DetectTaps : MonoBehaviour
         Metronome.SetActive(false);
         feedbackBtn.gameObject.SetActive(false);
         int numStars = computeNumStars();
-        Debug.Log("NUM STARS AWARDED: " + numStars);
         Globals.Instance.setStars(starsBtn, numStars);
         if(Globals.Instance.challenge) {
             Globals.Instance.setBestScore(numStars);
+            Debug.Log("NUM STARS AWARDED: " + numStars);
         }
         Text ButtonText = starsBtn.GetComponentInChildren<Text>();
         ButtonText.text = starsTextMap[numStars];
-        StartCoroutine(EndRhythmDisplay());
-    }
-
-    // Displays stars if challenge mode
-    IEnumerator EndRhythmDisplay() {
         Debug.Log("challenge mode? " + Globals.Instance.challenge);
         if(Globals.Instance.challenge) {
             starsBtn.gameObject.SetActive(true);
             Debug.Log("show stars");
-            yield return new WaitForSeconds(3f);
-            Debug.Log("disabling stars display");
-            starsBtn.gameObject.SetActive(false);
         }
-        playBtn.gameObject.SetActive(true);
         this.gameObject.SetActive(false);
         this.enabled = false;
     }
