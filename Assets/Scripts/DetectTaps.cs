@@ -136,8 +136,13 @@ public class DetectTaps : MonoBehaviour
                 return nearestSmaller;
             return -1;
         }
-        if (noteRatings[nearestSmaller] != Rating.MISSED)
-            return nearestLarger;
+        // if earlier note has already been rated
+        if (noteRatings[nearestSmaller] != Rating.MISSED) {
+            if(noteRatings[nearestLarger] != Rating.MISSED)
+                return -1;
+            return nearestLarger; 
+        }
+        // neither neighboring notes have been detected. Return index of closest note in time
         return expNoteTimes[nearestLarger] - time < time - expNoteTimes[nearestSmaller] ? nearestLarger : nearestSmaller;
           
     }
