@@ -14,7 +14,7 @@ public class MapRhythmSelection : MonoBehaviour
         string btn_name = button.name;
         if (btn_name == "IceCream")
         {
-            selected_index = (int)Rhythm.ICECREAM;
+            selected_index = (int)Rhythm.CATCHME;
 
         } else if (btn_name == "RunPony")
         {
@@ -25,9 +25,7 @@ public class MapRhythmSelection : MonoBehaviour
             selected_index = (int)Rhythm.ALLIGATOR;
 
         }
-
         Globals.Instance.setRhythm(selected_index);
-        //Globals.Instance.setStars(button, 2);
         Debug.Log("rhythm " + selected_index + " selected " + btn_name);
 
      }

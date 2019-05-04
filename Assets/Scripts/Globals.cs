@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public enum Rhythm { ALLIGATOR, RUNPONY, ICECREAM };
+public enum Rhythm { ALLIGATOR, RUNPONY, CATCHME };
 
 public class Globals : Singleton<Globals>
 {
@@ -12,12 +12,12 @@ public class Globals : Singleton<Globals>
     public static List<List<Note>> rhythms = new List<List<Note>>() {
        {new List<Note> {Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH }},
        {new List<Note> {Note.QUARTER, Note.EIGHTH, Note.EIGHTH, Note.QUARTER, Note.EIGHTH, Note.EIGHTH}},
-       {new List<Note> {Note.QUARTER, Note.QUARTER, Note.PAUSE, Note.QUARTER}}
+       {new List<Note> {Note.EIGHTH, Note.QUARTER, Note.EIGHTH, Note.EIGHTH, Note.QUARTER, Note.EIGHTH}}
     };
     public static List<String> mnemonics = new List<String>() {
         "See you later alligator", 
         "Run pony, run pony", 
-        "Ice cream shhh cone"
+        "Catch me go catch me go"
     };
 
     public int rhythmIndex = (int)Rhythm.RUNPONY;
@@ -39,7 +39,7 @@ public class Globals : Singleton<Globals>
         Debug.Log("New best score: " + score);
     }
 
-    // set "star" number of stars on a map of progress
+    // set "star" number of stars for the visual
     public void setStars(Button btn, int star)
     {
         Sprite stars = Resources.Load<Sprite>("Images/" + star + "star");
@@ -98,6 +98,21 @@ public class Globals : Singleton<Globals>
     public List<Note> getRhythm() {
         return curRhythm;
     }
+
+    // Return number of stars for the rhythm at index
+    public int getStars(int index) {
+        return bestScore[index];
+    }
+
+    public bool isChallengeMode() {
+        return challenge;
+    }
+
+    public void SetChallenge(bool val) {
+        challenge = val;
+        Debug.Log("CHALLENE STATE: " + challenge);
+    }
+
 
     //public void setNotes(bool b)
     //{

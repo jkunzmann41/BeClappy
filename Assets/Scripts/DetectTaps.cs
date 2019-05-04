@@ -69,14 +69,13 @@ public class DetectTaps : MonoBehaviour
 
     void Awake()
     {
-
     }
     void Start()
     {
         feedbackBtn.gameObject.SetActive(false);
         starsBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
-        rhythm = Globals.Instance.curRhythm;
+        rhythm = rg.getRepeatedRhythm(Globals.Instance.curRhythm, Globals.Instance.getRepititions());
         noteIndex = 0;
         noteRatings = Enumerable.Repeat(Rating.MISSED, rhythm.Count).ToList();
         expNoteTimes = rg.computeExpectedNoteTimes(rhythm);
@@ -84,12 +83,16 @@ public class DetectTaps : MonoBehaviour
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
         inprogress = true;
-        window = 2; // stop accepting taps x seconds after last tap was supposed to occur
+        window = 1; // stop accepting taps x seconds after last tap was supposed to occur
     }
+
     void Update()
     {   
-        if(!inprogress)
+        if(!inprogress) {
+            Start();
             return;  // end script!
+        }
+
         if(rhythmStartTime > 0 && (GetCurrentTime() - rhythmStartTime > expNoteTimes[expNoteTimes.Count - 1] + window))
             HandleEndRhythm(); 
       
@@ -176,13 +179,17 @@ public class DetectTaps : MonoBehaviour
         Text ButtonText = starsBtn.GetComponentInChildren<Text>();
         ButtonText.text = starsTextMap[numStars];
         StartCoroutine(EndRhythmDisplay());
+        this.gameObject.SetActive(false);
     }
 
-    // Calculates number of stars earned based on average rating from the claps. Renders to GUI and updates if new best score
+    // Displays stars if challenge mode
     IEnumerator EndRhythmDisplay() {
-        starsBtn.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3);
-        starsBtn.gameObject.SetActive(false);
+        Debug.Log("IS CHALLENGE? " + Globals.Instance.challenge);
+        if(Globals.Instance.isChallengeMode()) {
+            starsBtn.gameObject.SetActive(true);
+            yield return new WaitForSeconds(3);
+            starsBtn.gameObject.SetActive(false);
+        }
         playBtn.gameObject.SetActive(true);
     }
 
