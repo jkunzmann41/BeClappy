@@ -8,8 +8,6 @@ using System;
 public class RhythmAudio : MonoBehaviour
 {
     private RhythmGenerate rg;
-    private List<Note> rhythm = new List<Note> {Note.QUARTER, Note.EIGHTH, Note.EIGHTH};
-   
     private List<float> noteDurations;
     private AudioSource _audio;
     private double rhythmLengthTime = 5; // change this later
@@ -21,6 +19,7 @@ public class RhythmAudio : MonoBehaviour
     private bool first;
     public Button playButton;
     public Button starsBtn;
+    public Button feedbackBtn;
 
     void Awake()
     {
@@ -29,8 +28,9 @@ public class RhythmAudio : MonoBehaviour
     void Start()
     {
         starsBtn.gameObject.SetActive(false);
+        feedbackBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
-        List<Note> rep = rg.getRepeatedRhythm(rhythm, 4);
+        List<Note> rep = rg.getRepeatedRhythm(Globals.Instance.getRhythm(), Globals.Instance.getRepititions());
         noteDurations = rg.computeNoteDurations(rep);
         first = true;
         clapIndex = 0;

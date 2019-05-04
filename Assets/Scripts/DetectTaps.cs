@@ -1,3 +1,4 @@
+// This class is used for detecting claps (taps), scoring, and providing feedback to the user
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
@@ -21,12 +22,12 @@ public class DetectTaps : MonoBehaviour
     };
 
     public Dictionary<Rating, String> rateDisplayMap = new Dictionary<Rating, String> {
-        {Rating.AWESOME, "---Awesome---"},
-        {Rating.GREAT, "---Great---"},
-        {Rating.GOOD, "---Good---"},
-        {Rating.MISSED, "---Missed---"},
-        {Rating.LATE, "---Late---"},
-        {Rating.EARLY, "---Early---"}
+        {Rating.AWESOME, "Awesome!"},
+        {Rating.GREAT, "Great!"},
+        {Rating.GOOD, "Good!"},
+        {Rating.MISSED, "Missed"},
+        {Rating.LATE, "Late"},
+        {Rating.EARLY, "Early"}
     };
 
     public Dictionary<Rating, int> rateStarsMap = new Dictionary<Rating, int> {
@@ -62,6 +63,9 @@ public class DetectTaps : MonoBehaviour
     private bool inprogress;
     private double window;
     public Button starsBtn;
+    public Button feedbackBtn;
+    public Button playBtn;
+    public GameObject Metronome;
 
     void Awake()
     {
@@ -69,6 +73,7 @@ public class DetectTaps : MonoBehaviour
     }
     void Start()
     {
+        feedbackBtn.gameObject.SetActive(false);
         starsBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
         rhythm = Globals.Instance.curRhythm;
@@ -79,14 +84,14 @@ public class DetectTaps : MonoBehaviour
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
         inprogress = true;
-        window = 1; // stop accepting taps 1 second after last tap was supposed to occur
+        window = 2; // stop accepting taps x seconds after last tap was supposed to occur
     }
     void Update()
     {   
         if(!inprogress)
             return;  // end script!
         if(rhythmStartTime > 0 && (GetCurrentTime() - rhythmStartTime > expNoteTimes[expNoteTimes.Count - 1] + window))
-            DisplayStars(); 
+            HandleEndRhythm(); 
       
         if (Input.GetMouseButtonDown(0))
         {
@@ -152,20 +157,33 @@ public class DetectTaps : MonoBehaviour
             return Rating.LATE;
     }
 
-    // This should render the corresponding image to the GUI
+    // Render the corresponding text to the GUI
     void DisplayRating(Rating r) {
         Debug.Log(rateDisplayMap[r]);
+        Text ButtonText = feedbackBtn.GetComponentInChildren<Text>();
+        ButtonText.text = rateDisplayMap[r];
+        feedbackBtn.gameObject.SetActive(true);
     }
 
-    void DisplayStars() {
+    void HandleEndRhythm() {
+        inprogress = false;
+        Metronome.SetActive(false);
+        feedbackBtn.gameObject.SetActive(false);
         int numStars = computeNumStars();
         Debug.Log("NUM STARS AWARDED: " + numStars);
         Globals.Instance.setStars(starsBtn, numStars);
+        Globals.Instance.setBestScore(numStars);
         Text ButtonText = starsBtn.GetComponentInChildren<Text>();
         ButtonText.text = starsTextMap[numStars];
+        StartCoroutine(EndRhythmDisplay());
+    }
+
+    // Calculates number of stars earned based on average rating from the claps. Renders to GUI and updates if new best score
+    IEnumerator EndRhythmDisplay() {
         starsBtn.gameObject.SetActive(true);
-        inprogress = false;
-        Globals.Instance.setBestScore(numStars);
+        yield return new WaitForSeconds(3);
+        starsBtn.gameObject.SetActive(false);
+        playBtn.gameObject.SetActive(true);
     }
 
     // Computing number of stars to display after a rhythm in challenge mode

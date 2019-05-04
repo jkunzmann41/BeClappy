@@ -24,7 +24,7 @@ public class Globals : Singleton<Globals>
     public List<Note> curRhythm = rhythms[(int)Rhythm.RUNPONY];
     public string curMnemonic = mnemonics[(int)Rhythm.RUNPONY];
     public bool notes = true;
-    public bool challenge = true;
+    public bool challenge = false;
 
     protected Globals() { }
 
@@ -86,6 +86,17 @@ public class Globals : Singleton<Globals>
             }
         }
         return index;
+    }
+
+    // Number of repititions to perform the rhythm, depending on the mode
+    public int getRepititions() {
+        if(challenge) {
+            return 3;
+        } else return 1;
+    }
+
+    public List<Note> getRhythm() {
+        return curRhythm;
     }
 
     //public void setNotes(bool b)
