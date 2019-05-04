@@ -13,7 +13,7 @@ public class Words : MonoBehaviour
     Color32 orange_color = new Color32(215, 109, 67, 255);
 
     public void ChangeColor(){
-        words_text.color = blue_color;
+        //words_text.color = blue_color;
 
         if (text.gameObject.activeSelf == true)
         {
@@ -26,6 +26,8 @@ public class Words : MonoBehaviour
         else
         {
             text.gameObject.SetActive(true);
+            text.text = Globals.Instance.curMnemonic;
+            Debug.Log("SET " + Globals.Instance.curMnemonic);
             words_text.text = "No words";
 
         }

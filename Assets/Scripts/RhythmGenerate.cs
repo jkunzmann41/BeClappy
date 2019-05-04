@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public enum Note {WHOLE, HALF, QUARTER, EIGHTH, SIXTEENTH};
+public enum Note {WHOLE, HALF, QUARTER, EIGHTH, SIXTEENTH, PAUSE};
 
 public class RhythmGenerate {
     public int bpm = 60;
@@ -14,7 +14,8 @@ public class RhythmGenerate {
         {Note.HALF, 2},
         {Note.QUARTER, 1},
         {Note.EIGHTH, .5},
-        {Note.SIXTEENTH, .25}
+        {Note.SIXTEENTH, .25},
+        {Note.PAUSE, 1} // TODO make PAUSE silent
     };
 
     public RhythmGenerate() {
