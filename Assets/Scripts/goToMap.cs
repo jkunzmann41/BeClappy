@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.SceneManager;
+using UnityEngine.SceneManagement;
 
 public class goToMap : MonoBehaviour
 {
     void OnMouseUp()
     {
-        //SceneManager.LoadScene("Map", LoadSceneMode.single);
+        SceneManager.LoadScene("Map", LoadSceneMode.Single);
     }
 }
