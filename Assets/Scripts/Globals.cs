@@ -51,10 +51,13 @@ public class Globals : Singleton<Globals>
             if (image != buttonImage)
             {
                 image.sprite = stars;
+                if(challenge)
+                    image.enabled = true;
+                else
+                    image.enabled = false;
                 break;
             }
         }
-
     }
 
     // set image for selected rhythm

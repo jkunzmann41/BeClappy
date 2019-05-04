@@ -15,14 +15,13 @@ public class Notes_circles : MonoBehaviour
     void Start() {
         Image im2 = btn.GetComponent<Image>();
         im2.overrideSprite = notes;
-        click = true;
         Globals.Instance.notes = true;
         Globals.Instance.setImageRhythm(play);
     } 
     public void NotesOrCircles()
     {
 
-        if (click)
+        if (Globals.Instance.notes)
         {
             Image im1 = btn.GetComponent<Image>();
             im1.overrideSprite = circles;
@@ -34,7 +33,6 @@ public class Notes_circles : MonoBehaviour
         {
             Image im2 = btn.GetComponent<Image>();
             im2.overrideSprite = notes;
-            click = true;
             Globals.Instance.notes = true;
             Globals.Instance.setImageRhythm(play);
         }
