@@ -8,6 +8,8 @@ public class Notes_circles : MonoBehaviour
     public Button btn;
     public Sprite circles;
     public Sprite notes;
+    public Image play;
+
     private bool click = true;
     public void NotesOrCircles()
     {
@@ -17,12 +19,16 @@ public class Notes_circles : MonoBehaviour
             Image im1 = btn.GetComponent<Image>();
             im1.overrideSprite = circles;
             click = false;
+            Globals.Instance.notes = false;
+            Globals.Instance.setImageRhythm(play);
         }
         else
         {
             Image im2 = btn.GetComponent<Image>();
             im2.overrideSprite = notes;
             click = true;
+            Globals.Instance.notes = true;
+            Globals.Instance.setImageRhythm(play);
         }
     }
 }

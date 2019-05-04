@@ -26,6 +26,8 @@ public class Words : MonoBehaviour
         else
         {
             text.gameObject.SetActive(true);
+            text.text = Globals.Instance.curMnemonic;
+            Debug.Log("SET " + Globals.Instance.curMnemonic);
             words_text.text = "No words";
 
         }

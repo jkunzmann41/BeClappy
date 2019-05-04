@@ -27,7 +27,7 @@ public class MapRhythmSelection : MonoBehaviour
         }
 
         Globals.Instance.setRhythm(selected_index);
-        Globals.Instance.setStars(button, 2);
+        //Globals.Instance.setStars(button, 2);
         Debug.Log("rhythm " + selected_index + " selected " + btn_name);
 
      }

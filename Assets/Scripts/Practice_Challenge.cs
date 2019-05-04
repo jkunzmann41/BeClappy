@@ -17,14 +17,16 @@ public class Practice_Challenge : MonoBehaviour
             Image im1 = btn.GetComponent<Image>();
             im1.overrideSprite = practice;
             click = false;
-            Debug.Log("Click = " + click);
+            Globals.Instance.challenge = false;
+            //Debug.Log("Click = " + click);
         }
         else
         {
             Image im2 = btn.GetComponent<Image>();
             im2.overrideSprite = challenge;
             click = true;
-            Debug.Log("Click = " + click);
+            Globals.Instance.challenge = true;
+            //Debug.Log("Click = " + click);
         }
     }
 }
