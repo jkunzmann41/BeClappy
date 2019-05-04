@@ -12,8 +12,8 @@ public class DetectTaps : MonoBehaviour
     // value is the max offset from the actual time the tap was supposed to happen
     public Dictionary<Rating, double> ratingMap = new Dictionary<Rating, double> {
         {Rating.AWESOME, .1},
-        {Rating.GREAT, .15},
-        {Rating.GOOD, .2},
+        {Rating.GREAT, .2},
+        {Rating.GOOD, .3},
         {Rating.MISSED, 1},
         {Rating.LATE, 1},
         {Rating.EARLY, 1}
@@ -36,10 +36,10 @@ public class DetectTaps : MonoBehaviour
         {Rating.LATE, 0},
         {Rating.EARLY, 0}
     };
-
     // end of globals
+
     public RhythmGenerate rg;
-    private List<Note> rhythm = new List<Note> {Note.HALF, Note.QUARTER, Note.QUARTER};
+    private List<Note> rhythm;
     private List<double> expNoteTimes;
     private List<Rating> noteRatings;
     private AudioSource _audio;
@@ -59,6 +59,7 @@ public class DetectTaps : MonoBehaviour
     void Start()
     {
         rg = new RhythmGenerate();
+        rhythm = Globals.Instance.curRhythm;
         noteIndex = 0;
         noteRatings = Enumerable.Repeat(Rating.MISSED, rhythm.Count).ToList();
         expNoteTimes = rg.computeExpectedNoteTimes(rhythm);
@@ -73,7 +74,7 @@ public class DetectTaps : MonoBehaviour
         if(rhythmStartTime > 0 && (GetCurrentTime() - rhythmStartTime > expNoteTimes[expNoteTimes.Count - 1] + window))
             inprogress = false; 
         if(!inprogress)
-            return;  
+            return;  // end script!
         if (Input.GetMouseButtonDown(0))
         {
             Rating rate = Rating.MISSED;
@@ -99,20 +100,26 @@ public class DetectTaps : MonoBehaviour
             }
             DisplayRating(rate);
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            // right click to be able to see what timestamps are stored
-            foreach (double time in timestamps) {
-                Debug.Log(time);
-            }
-
-        }
-        
     }
 
     double GetCurrentTime() {
         return (DateTime.Now.ToUniversalTime() - new DateTime (1970, 1, 1)).TotalSeconds;
+    }
+
+    // Returns index of nearest unattempted note by comparing time of clap/tap to the expected clap/tap times. If both surrounding notes already attempted, returns -1
+    int NearestNote(double time) {
+        int nearestLarger = ~expNoteTimes.BinarySearch(time);
+        int nearestSmaller = nearestLarger - 1;
+        if(nearestLarger == expNoteTimes.Count) {
+            // then nearestSmaller is index of last element in expNoteTimes
+            if(noteRatings[nearestSmaller] == Rating.MISSED)
+                return nearestSmaller;
+            return -1;
+        }
+        if (noteRatings[nearestSmaller] != Rating.MISSED)
+            return nearestLarger;
+        return expNoteTimes[nearestLarger] - time < time - expNoteTimes[nearestSmaller] ? nearestLarger : nearestSmaller;
+          
     }
 
     // computes Awesome, Great, Good, or Missed rating for the note
@@ -132,23 +139,6 @@ public class DetectTaps : MonoBehaviour
             return Rating.LATE;
     }
 
-
-    // Returns index of nearest unattempted note by comparing time of clap/tap to the expected clap/tap times. If both surrounding notes already attempted, returns -1
-    int NearestNote(double time) {
-        int nearestLarger = ~expNoteTimes.BinarySearch(time);
-        int nearestSmaller = nearestLarger - 1;
-        if(nearestLarger == expNoteTimes.Count) {
-            // then nearestSmaller is index of last element in expNoteTimes
-            if(noteRatings[nearestSmaller] == Rating.MISSED)
-                return nearestSmaller;
-            return -1;
-        }
-        if (noteRatings[nearestSmaller] != Rating.MISSED)
-            return nearestLarger;
-        return expNoteTimes[nearestLarger] - time < time - expNoteTimes[nearestSmaller] ? nearestLarger : nearestSmaller;
-          
-    }
-
     // This should render the corresponding image to the GUI
     void DisplayRating(Rating r) {
         Debug.Log(rateDisplayMap[r]);
@@ -165,6 +155,6 @@ public class DetectTaps : MonoBehaviour
         foreach (Rating r in noteRatings) {
             sum += rateStarsMap[r];
         }
-        return sum/noteRatings.Count;
+        return 1.0*sum/noteRatings.Count;
     }
 }
