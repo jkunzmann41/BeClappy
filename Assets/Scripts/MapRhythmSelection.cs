@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Rhythm { ALLIGATOR, RUNPONY, ICECREAM };
+
 public class MapRhythmSelection : MonoBehaviour
 {
 

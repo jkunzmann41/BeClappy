@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 
 public class DetectTaps : MonoBehaviour
 {
@@ -36,6 +37,15 @@ public class DetectTaps : MonoBehaviour
         {Rating.LATE, 0},
         {Rating.EARLY, 0}
     };
+
+    public Dictionary<int, String> starsTextMap = new Dictionary<int, String> {
+        {3, "Awesome!"},
+        {2, "Great!"},
+        {1, "Good!"},
+        {0, "Try Again!"}
+    };
+
+
     // end of globals
 
     public RhythmGenerate rg;
@@ -51,6 +61,7 @@ public class DetectTaps : MonoBehaviour
     private double expectedClapTime; // time to expect the next clap
     private bool inprogress;
     private double window;
+    public Button starsBtn;
 
     void Awake()
     {
@@ -58,6 +69,7 @@ public class DetectTaps : MonoBehaviour
     }
     void Start()
     {
+        starsBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
         rhythm = Globals.Instance.curRhythm;
         noteIndex = 0;
@@ -71,10 +83,11 @@ public class DetectTaps : MonoBehaviour
     }
     void Update()
     {   
-        if(rhythmStartTime > 0 && (GetCurrentTime() - rhythmStartTime > expNoteTimes[expNoteTimes.Count - 1] + window))
-            inprogress = false; 
         if(!inprogress)
             return;  // end script!
+        if(rhythmStartTime > 0 && (GetCurrentTime() - rhythmStartTime > expNoteTimes[expNoteTimes.Count - 1] + window))
+            DisplayStars(); 
+      
         if (Input.GetMouseButtonDown(0))
         {
             Rating rate = Rating.MISSED;
@@ -144,17 +157,25 @@ public class DetectTaps : MonoBehaviour
         Debug.Log(rateDisplayMap[r]);
     }
 
-    // Computing number of stars to display after a rhythm in challenge mode
-    int computeNumStars(List<Rating> noteRatings) {
-        double starsAvg = computeAverageRating(noteRatings);
-        return (int)Math.Round(starsAvg);
+    void DisplayStars() {
+        int numStars = computeNumStars();
+        Debug.Log("NUM STARS AWARDED: " + numStars);
+        Globals.Instance.setStars(starsBtn, numStars);
+        Text ButtonText = starsBtn.GetComponentInChildren<Text>();
+        ButtonText.text = starsTextMap[numStars];
+        starsBtn.gameObject.SetActive(true);
+        inprogress = false;
+        Globals.Instance.setBestScore(numStars);
     }
 
-    double computeAverageRating(List<Rating> noteRatings) {
+    // Computing number of stars to display after a rhythm in challenge mode
+    int computeNumStars() {
         int sum = 0;
         foreach (Rating r in noteRatings) {
             sum += rateStarsMap[r];
         }
-        return 1.0*sum/noteRatings.Count;
+        double starsAvg = 1.0*sum/noteRatings.Count;
+        return (int)Math.Round(starsAvg);
     }
+
 }

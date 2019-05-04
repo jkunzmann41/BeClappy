@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+public enum Rhythm { ALLIGATOR, RUNPONY, ICECREAM };
+
 public class Globals : Singleton<Globals>
 {
+    public List<int> bestScore = new List<int>() {0, 0, 0};
+
     public static List<List<Note>> rhythms = new List<List<Note>>() {
        {new List<Note> {Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH }},
        {new List<Note> {Note.QUARTER, Note.EIGHTH, Note.EIGHTH, Note.QUARTER, Note.EIGHTH, Note.EIGHTH}},
@@ -14,10 +18,11 @@ public class Globals : Singleton<Globals>
         "See you later alligator", 
         "Run pony, run pony", 
         "Ice cream shhh cone"
-        };
+    };
 
-    public List<Note> curRhythm = rhythms[1];
-    public string curMnemonic = mnemonics[1];
+    public int rhythmIndex = (int)Rhythm.RUNPONY;
+    public List<Note> curRhythm = rhythms[(int)Rhythm.RUNPONY];
+    public string curMnemonic = mnemonics[(int)Rhythm.RUNPONY];
     public bool notes = true;
     public bool challenge = true;
 
@@ -26,6 +31,12 @@ public class Globals : Singleton<Globals>
     public void setRhythm(int i) {
         curRhythm = rhythms[i];
         curMnemonic = mnemonics[i];
+    }
+
+    public void setBestScore(int score) {
+        if (score > bestScore[rhythmIndex])
+            bestScore[rhythmIndex] = score;
+        Debug.Log("New best score: " + score);
     }
 
     // set "star" number of stars on a map of progress

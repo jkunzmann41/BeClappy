@@ -20,6 +20,7 @@ public class RhythmAudio : MonoBehaviour
     private int totalClaps;
     private bool first;
     public Button playButton;
+    public Button starsBtn;
 
     void Awake()
     {
@@ -27,6 +28,7 @@ public class RhythmAudio : MonoBehaviour
     }
     void Start()
     {
+        starsBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
         List<Note> rep = rg.getRepeatedRhythm(rhythm, 4);
         noteDurations = rg.computeNoteDurations(rep);
