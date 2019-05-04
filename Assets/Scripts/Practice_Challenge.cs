@@ -8,7 +8,7 @@ public class Practice_Challenge : MonoBehaviour
     public Button btn;
     public Sprite practice;
     public Sprite challenge;
-    private bool click = true;
+    private bool click = false;
     public void PracticeOrChallenge()
     {
 
@@ -17,7 +17,7 @@ public class Practice_Challenge : MonoBehaviour
             Image im1 = btn.GetComponent<Image>();
             im1.overrideSprite = practice;
             click = false;
-            Globals.Instance.challenge = false;
+            Globals.Instance.SetChallenge(false);
             //Debug.Log("Click = " + click);
         }
         else
@@ -25,7 +25,7 @@ public class Practice_Challenge : MonoBehaviour
             Image im2 = btn.GetComponent<Image>();
             im2.overrideSprite = challenge;
             click = true;
-            Globals.Instance.challenge = true;
+            Globals.Instance.SetChallenge(true);
             //Debug.Log("Click = " + click);
         }
     }
