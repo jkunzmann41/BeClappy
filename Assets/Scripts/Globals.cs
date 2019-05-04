@@ -24,7 +24,7 @@ public class Globals : Singleton<Globals>
     public List<Note> curRhythm = rhythms[(int)Rhythm.RUNPONY];
     public string curMnemonic = mnemonics[(int)Rhythm.RUNPONY];
     public bool notes = true;
-    public bool challenge = false;
+    public bool challenge = true;
 
     protected Globals() { }
 
@@ -61,7 +61,6 @@ public class Globals : Singleton<Globals>
     {
         Sprite playZone;
         int i = findIndex();
-        Debug.Log("FOUND INDEX ++++++ " + i);
         if (notes)
         {
             playZone = Resources.Load<Sprite>("Images/" + i + "notes");

@@ -12,7 +12,7 @@ public class MapRhythmSelection : MonoBehaviour
      {
         var selected_index = 0;
         string btn_name = button.name;
-        if (btn_name == "IceCream")
+        if (btn_name == "CatchMe")
         {
             selected_index = (int)Rhythm.CATCHME;
 
