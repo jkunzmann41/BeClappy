@@ -31,6 +31,7 @@ public class Globals : Singleton<Globals>
     public void setRhythm(int i) {
         curRhythm = rhythms[i];
         curMnemonic = mnemonics[i];
+        rhythmIndex = i;
     }
 
     public void setBestScore(int score) {
