@@ -8,10 +8,6 @@ public class Practice_Challenge : MonoBehaviour
     public Button btn;
     public Sprite practice;
     public Sprite challenge;
-<<<<<<< HEAD
-    private bool click = true;
-=======
->>>>>>> 0e15f12a4ebed270a58089c3a37eb83a2bf5596e
     public void PracticeOrChallenge()
     {
 
