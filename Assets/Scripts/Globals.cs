@@ -28,7 +28,9 @@ public class Globals : Singleton<Globals>
 
     protected Globals() { }
 
+
     public void setRhythm(int i) {
+        Debug.Log("Setting rhythm " + i);
         curRhythm = rhythms[i];
         curMnemonic = mnemonics[i];
         rhythmIndex = i;
@@ -114,6 +116,10 @@ public class Globals : Singleton<Globals>
     public void SetChallenge(bool val) {
         challenge = val;
         Debug.Log("CHALLENGE STATE: " + challenge);
+    }
+
+    public int numRhythms() {
+        return rhythms.Count;
     }
 
 

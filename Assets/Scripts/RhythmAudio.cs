@@ -21,12 +21,10 @@ public class RhythmAudio : MonoBehaviour
     public Button starsBtn;
     public Button feedbackBtn;
 
-    void Awake()
-    {
 
-    }
-    void Start()
+    void OnEnable()
     {
+        Debug.Log("audio!");
         starsBtn.gameObject.SetActive(false);
         feedbackBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
