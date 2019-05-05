@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3130,10 +3130,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
-    m_FontSize: 20
+    m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -3142,21 +3142,12 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'BeClappy is a fun and easy way to practice rhythms trhough clapping and
-    receive feedback.
+    receive feedback. Learn the rhythm in practice mode, and earn stars by performing
+    a longer version of the rhythm in challenge mode.
 
-
-    Learn the rhythm in practice mode, and earn stars by performing a longer version
-    of the rhythm in challenge mode.
-
-
-    Press "Words" to reveal a mnemonic phrase that matches the current rhythm.
-
-
-    Choose your preference of viewing spaced out cirlces or music notes to match the
-    rhythm.
-
-
-    Want to listen to the rhythm again? Press the treble clef in the bottom left corner.
+    Press "Words" to reveal a mnemonic phrase that matches the current rhythm. Choose
+    your preference of viewing spaced out cirlces or music notes to match the rhythm.Want
+    to listen to the rhythm again? Press the treble clef in the bottom left corner.
 
 
     Group Leader: Valentina Pogudina

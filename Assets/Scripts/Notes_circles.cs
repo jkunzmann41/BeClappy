@@ -10,7 +10,6 @@ public class Notes_circles : MonoBehaviour
     public Sprite notes;
     public Image play;
 
-    private bool click = true;
 
     void Start() {
         Image im2 = btn.GetComponent<Image>();
@@ -25,7 +24,6 @@ public class Notes_circles : MonoBehaviour
         {
             Image im1 = btn.GetComponent<Image>();
             im1.overrideSprite = circles;
-            click = false;
             Globals.Instance.notes = false;
             Globals.Instance.setImageRhythm(play);
         }
