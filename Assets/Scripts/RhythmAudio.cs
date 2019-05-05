@@ -36,7 +36,7 @@ public class RhythmAudio : MonoBehaviour
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
         StartCoroutine(SoundOut());
-        this.enabled = false;
+        //this.enabled = false;
     }
     
     IEnumerator SoundOut()

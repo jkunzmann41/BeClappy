@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class goToMap : MonoBehaviour
@@ -12,6 +13,7 @@ public class goToMap : MonoBehaviour
         if (scene.buildIndex == 1)
         {
             SceneManager.LoadScene(0);
+
         }
         else
         {
