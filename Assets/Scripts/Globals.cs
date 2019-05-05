@@ -31,6 +31,7 @@ public class Globals : Singleton<Globals>
     public void setRhythm(int i) {
         curRhythm = rhythms[i];
         curMnemonic = mnemonics[i];
+        rhythmIndex = i;
     }
 
     public void setBestScore(int score) {
@@ -50,10 +51,13 @@ public class Globals : Singleton<Globals>
             if (image != buttonImage)
             {
                 image.sprite = stars;
+                if(challenge)
+                    image.enabled = true;
+                else
+                    image.enabled = false;
                 break;
             }
         }
-
     }
 
     // set image for selected rhythm
