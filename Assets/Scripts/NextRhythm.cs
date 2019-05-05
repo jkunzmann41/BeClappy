@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NextRhythm : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class NextRhythm : MonoBehaviour
     public GameObject AudioScript;
     DetectTaps tapScript;
     public GameObject TapScript;
+    public Image playZone;
 
     public void nextRhythmLeft()
     {
@@ -17,6 +19,7 @@ public class NextRhythm : MonoBehaviour
             next = 2;
         }
         Globals.Instance.setRhythm(next);
+        Globals.Instance.setImageRhythm(playZone);
         StartNext();
     }
     public void nextRhythmRight()
@@ -27,6 +30,7 @@ public class NextRhythm : MonoBehaviour
             next = 0;
         }
         Globals.Instance.setRhythm(next);
+        Globals.Instance.setImageRhythm(playZone);
         Debug.Log("index is now : " + Globals.Instance.rhythmIndex);
         StartNext();
     }

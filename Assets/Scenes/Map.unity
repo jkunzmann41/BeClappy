@@ -234,8 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b3b77fc1c1d43e9bbc178b810b21b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgInfo: {fileID: 0}
-  btn: {fileID: 0}
+  imgInfo: {fileID: 1165784861}
+  btn: {fileID: 1598898297}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,8 +415,6 @@ GameObject:
   - component: {fileID: 306264896}
   - component: {fileID: 306264895}
   - component: {fileID: 306264898}
-  - component: {fileID: 306264899}
-  - component: {fileID: 306264900}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -555,30 +553,6 @@ MonoBehaviour:
           m_CallState: 1
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &306264899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306264893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c6a4bd67822f4f9399cbb5330525459, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &306264900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306264893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b6efdfee1cff400f93a28bf02f9cb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &349290747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,12 +1469,12 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1338098729}
-          m_MethodName: changeSceneToMap
-          m_Mode: 1
+        - m_Target: {fileID: 1338098728}
+          m_MethodName: OnClicked
+          m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgument: {fileID: 1338098725}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
