@@ -24,7 +24,7 @@ public class Globals : Singleton<Globals>
     public List<Note> curRhythm = rhythms[(int)Rhythm.RUNPONY];
     public string curMnemonic = mnemonics[(int)Rhythm.RUNPONY];
     public bool notes = true;
-    public bool challenge = true;
+    public bool challenge = false;
 
     protected Globals() { }
 
@@ -109,7 +109,7 @@ public class Globals : Singleton<Globals>
 
     public void SetChallenge(bool val) {
         challenge = val;
-        Debug.Log("CHALLENE STATE: " + challenge);
+        Debug.Log("CHALLENGE STATE: " + challenge);
     }
 
 
