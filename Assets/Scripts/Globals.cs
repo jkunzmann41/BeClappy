@@ -7,7 +7,7 @@ public enum Rhythm { ALLIGATOR, RUNPONY, CATCHME };
 
 public class Globals : Singleton<Globals>
 {
-    public List<int> bestScore = new List<int>() {0, 0, 0};
+    public List<int> bestScore = new List<int>() {0, 0, 0}; 
 
     public static List<List<Note>> rhythms = new List<List<Note>>() {
        {new List<Note> {Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH, Note.EIGHTH }},
