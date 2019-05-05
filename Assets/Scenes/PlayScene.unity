@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3141,14 +3141,22 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The objective of our project is to make an easy and fun way for kids to
-    practice rhythms and track their progress through clapping. Today, kids practice
-    repeating rhythms by listening to a physical instructor, then the kids often execute
-    that rhythm back to the instructor, often done through clapping. Some limitations
-    that exist for the current practice are: it can be hard to measure by ear how
-    accurate the person is executing the rhythm, it can be hard to track progress
-    when computer aided devices are not involved, and the current practice of learning
-    requires the presence of a second person to teach the rhythm.
+  m_Text: 'BeClappy is a fun and easy way to practice rhythms trhough clapping and
+    receive feedback.
+
+
+    Learn the rhythm in practice mode, and earn stars by performing a longer version
+    of the rhythm in challenge mode.
+
+
+    Press "Words" to reveal a mnemonic phrase that matches the current rhythm.
+
+
+    Choose your preference of viewing spaced out cirlces or music notes to match the
+    rhythm.
+
+
+    Want to listen to the rhythm again? Press the treble clef in the bottom left corner.
 
 
     Group Leader: Valentina Pogudina
