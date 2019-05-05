@@ -10,6 +10,8 @@ public class NextRhythm : MonoBehaviour
     DetectTaps tapScript;
     public GameObject TapScript;
     public Image playZone;
+    Button playButton;
+
 
     public void nextRhythmLeft()
     {
@@ -36,7 +38,10 @@ public class NextRhythm : MonoBehaviour
     }
     public void nextRepeat()
     {
-        StartNext();
+        // playButton.gameObject.SetActive(true);
+        tapScript = TapScript.GetComponent<DetectTaps>();
+        TapScript.SetActive(true);
+        tapScript.enabled = true;
     }
 
     public void StartNext() {
@@ -44,8 +49,6 @@ public class NextRhythm : MonoBehaviour
         aud.enabled = false;
         AudioScript.SetActive(true);
         aud.enabled = true;
-        // tapScript = TapScript.GetComponent<DetectTaps>();
-        // TapScript.SetActive(true);
-        // tapScript.enabled = true;
+        
     }
 }
