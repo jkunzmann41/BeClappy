@@ -52,6 +52,7 @@ public class RhythmAudio : MonoBehaviour
             yield return new WaitForSeconds(noteDurations[clapIndex++]); 
          }
          playButton.gameObject.SetActive(true);
+         this.enabled = false;
      }
     double GetCurrentTime() {
         return (DateTime.Now.ToUniversalTime() - new DateTime (1970, 1, 1)).TotalSeconds;
