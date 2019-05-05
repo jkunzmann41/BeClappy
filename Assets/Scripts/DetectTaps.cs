@@ -75,6 +75,7 @@ public class DetectTaps : MonoBehaviour
         if(inprogress) {
             return;  // already in progress
         }
+        Metronome.gameObject.SetActive(true);
         feedbackBtn.gameObject.SetActive(false);
         starsBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();

@@ -14,7 +14,6 @@ public class StartPlay : MonoBehaviour
     {
         btnPlay.gameObject.SetActive(false);
         Debug.Log("Starting the game");
-        Metronome.SetActive(true);
         tapScript = TapScript.GetComponent<DetectTaps>();
         TapScript.SetActive(true);
         tapScript.enabled = true;
