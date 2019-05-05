@@ -12,6 +12,10 @@ public class Words : MonoBehaviour
     Color32 blue_color = new Color32(148, 189, 156, 255);
     Color32 orange_color = new Color32(215, 109, 67, 255);
 
+    public void Start() {
+        text.gameObject.SetActive(false);
+            words_text.text = "Words";
+    }
     public void ChangeColor(){
         //words_text.color = blue_color;
 

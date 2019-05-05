@@ -195,13 +195,16 @@ public class DetectTaps : MonoBehaviour
     }
 
     // Computing number of stars to display after a rhythm in challenge mode
+    // if each note had rate of awesome => awesome - 3 stars
+    // if each note had rate of great or better => great - 2 stars
+    // if each note had rate of good or better => good - 1 star
+    // try again, otherwise - 0 stars
     int computeNumStars() {
-        int sum = 0;
-        foreach (Rating r in noteRatings) {
-            sum += rateStarsMap[r];
+        int low = rateStarsMap[Rating.AWESOME];
+        foreach(Rating r in noteRatings) {
+            if (rateStarsMap[r] < low)
+                low = rateStarsMap[r];
         }
-        double starsAvg = 1.0*sum/noteRatings.Count;
-        return (int)Math.Round(starsAvg);
+        return low;
     }
-
 }
