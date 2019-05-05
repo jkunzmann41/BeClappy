@@ -36,6 +36,7 @@ public class RhythmAudio : MonoBehaviour
         timestamps = new List<double>(); 
         _audio = GetComponent<AudioSource>();
         StartCoroutine(SoundOut());
+        this.enabled = false;
     }
     
     IEnumerator SoundOut()
@@ -55,5 +56,10 @@ public class RhythmAudio : MonoBehaviour
      }
     double GetCurrentTime() {
         return (DateTime.Now.ToUniversalTime() - new DateTime (1970, 1, 1)).TotalSeconds;
+    }
+
+    public void replay()
+    {
+        OnEnable();
     }
 }
