@@ -7,14 +7,17 @@ using UnityEngine.UI;
 
 public class MapRhythmSelection : MonoBehaviour
 {
+    goToMap SceneChanger;
 
      public void OnClicked(Button button)
      {
         var selected_index = 0;
         string btn_name = button.name;
+        Debug.Log("BUTTON " + btn_name);
         if (btn_name == "CatchMe")
         {
             selected_index = (int)Rhythm.CATCHME;
+            Debug.Log("CATCH ME: " + selected_index);
 
         } else if (btn_name == "RunPony")
         {
@@ -27,6 +30,7 @@ public class MapRhythmSelection : MonoBehaviour
         }
         Globals.Instance.setRhythm(selected_index);
         Debug.Log("rhythm " + selected_index + " selected " + btn_name);
+        SceneChanger.changeSceneToMap();
 
      }
 }

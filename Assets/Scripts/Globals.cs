@@ -20,6 +20,12 @@ public class Globals : Singleton<Globals>
         "Catch me go catch me go"
     };
 
+    public static List<String> names = new List<String>() {
+        "Alligator",
+        "RunPony",
+        "CatchMe"
+    };
+
     public int rhythmIndex = (int)Rhythm.RUNPONY;
     public List<Note> curRhythm = rhythms[(int)Rhythm.RUNPONY];
     public string curMnemonic = mnemonics[(int)Rhythm.RUNPONY];
@@ -40,9 +46,25 @@ public class Globals : Singleton<Globals>
         Debug.Log("New best score: " + score);
     }
 
-    // set "star" number of stars for the visual
+    // set "star" number of stars for the visual and for the map
     public void setStars(Button btn, int star)
     {
+        // sets for the feedback visual
+        if(challenge) 
+            SetStarsOnButton(btn, star, true);
+        else
+            SetStarsOnButton(btn, star, false);
+        
+        // set stars for the map for this rhythm
+        // find the button used for stars for this rhythm on map
+        String btnName = names[rhythmIndex];
+        btn = GameObject.Find(btnName).GetComponent<Button>();
+        SetStarsOnButton(btn, star, false);
+
+    }
+
+    // Sets Button image to have number of stars specified
+    public void SetStarsOnButton(Button btn, int star, bool enable) {
         Sprite stars = Resources.Load<Sprite>("Images/" + star + "star");
         Image buttonImage = btn.GetComponent<Image>();
         Image[] images = btn.GetComponentsInChildren<Image>();
@@ -51,10 +73,7 @@ public class Globals : Singleton<Globals>
             if (image != buttonImage)
             {
                 image.sprite = stars;
-                if(challenge)
-                    image.enabled = true;
-                else
-                    image.enabled = false;
+                image.enabled = enable;
                 break;
             }
         }
