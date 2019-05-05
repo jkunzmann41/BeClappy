@@ -72,6 +72,9 @@ public class DetectTaps : MonoBehaviour
     }
     void OnEnable()
     {
+        if(inprogress) {
+            return;  // already in progress
+        }
         feedbackBtn.gameObject.SetActive(false);
         starsBtn.gameObject.SetActive(false);
         rg = new RhythmGenerate();
